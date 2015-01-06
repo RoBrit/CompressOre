@@ -1,0 +1,17 @@
+[
+  {
+    "modid": "CompressOre",
+    "name": "CompressOre",
+    "version": "${version}",
+    "mcversion": "${mc_version}",
+    "description": "TODO",
+    "credits": "",
+    "url": "www.robrit.com",
+    "updateUrl": "",
+    "authorList": ["TheRoBrit"],
+    "logoFile": "",
+    "screenshots": [],
+    "parent":"",
+    "dependencies": ["mod_MinecraftForge"]
+  }
+]
