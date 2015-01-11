@@ -19,6 +19,43 @@
 
 package com.robrit.compressore.common.proxy;
 
+import com.robrit.compressore.common.util.BlockHelper;
+import com.robrit.compressore.common.util.LogHelper;
+import com.robrit.compressore.common.util.ModInformation;
+
+import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemStack;
+import net.minecraftforge.oredict.OreDictionary;
+
+import java.util.ArrayList;
+
 public abstract class CommonProxy implements IProxy {
 
+  @Override
+  public void initDefaultCompressibleBlocks() {
+    final String[] blockNames = OreDictionary.getOreNames();
+
+    for (int listIndex = 0; listIndex < blockNames.length; listIndex++) {
+      final String blockName = blockNames[listIndex];
+      final ArrayList<ItemStack> oreDictEntries = OreDictionary.getOres(blockName);
+      ArrayList<ItemStack> blockEntries = new ArrayList<ItemStack>();
+      
+      if (!oreDictEntries.isEmpty()) {
+        for (int entryIndex = 0; entryIndex < oreDictEntries.size(); entryIndex++) {
+          if (oreDictEntries.get(entryIndex).getItem() instanceof ItemBlock) {
+            blockEntries.add(oreDictEntries.get(entryIndex));
+          }
+        }
+
+        if (!blockEntries.isEmpty()) {
+          BlockHelper.setEntriesInRegistry(blockName, blockEntries);
+
+          if (ModInformation.DEBUG_MODE) {
+            LogHelper.info(String.format("Added %d entries for %s",
+                                         blockEntries.size(), blockName));
+          }
+        }
+      }
+    }
+  }
 }

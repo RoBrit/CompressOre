@@ -55,6 +55,7 @@ public class CompressOre {
   public static void preInit(FMLPreInitializationEvent event) {
     ConfigurationHandler.setConfigFile(event.getSuggestedConfigurationFile());
     ConfigurationHandler.init();
+    proxy.initDefaultCompressableBlocks();
 
     if (ModInformation.DEBUG_MODE) {
       LogHelper.info(String.format("Finished pre-initialisation stage for %s",

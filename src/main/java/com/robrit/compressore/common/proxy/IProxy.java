@@ -21,4 +21,5 @@ package com.robrit.compressore.common.proxy;
 
 public interface IProxy {
 
+  public void initDefaultCompressibleBlocks();
 }
