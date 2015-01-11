@@ -24,7 +24,7 @@ public class ModInformation {
   public static final String MOD_ID = "CompressOre";
   public static final String MOD_NAME = "CompressOre";
   public static final String MOD_VERSION = "@VERSION@";
-  public static final String MOD_DEPENDENCIES = "";
+  public static final String MOD_DEPENDENCIES = "after:*";
   public static final String MOD_FINGERPRINT = "@FINGERPRINT@";
   public static final String MOD_PACKAGE = "com.robrit.compressore";
 
