@@ -19,12 +19,17 @@
 
 package com.robrit.compressore.common.event;
 
+import com.robrit.compressore.common.block.CompressedBlockData;
+import com.robrit.compressore.common.ref.ConfigurationData;
+import com.robrit.compressore.common.util.BlockHelper;
 import com.robrit.compressore.common.util.LogHelper;
 import com.robrit.compressore.common.util.ModInformation;
 
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import cpw.mods.fml.client.event.ConfigChangedEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
@@ -41,6 +46,33 @@ public class ConfigurationHandler {
   public static void updateConfiguration() {
     try {
       configuration.load();
+
+      for (final String blockName : BlockHelper.getBlockRegistryKeys()) {
+        final ArrayList<CompressedBlockData> blockConfigData = new ArrayList<CompressedBlockData>();
+
+        for (final ItemStack blockEntry : BlockHelper.getEntriesFromRegistry(blockName)) {
+          final CompressedBlockData entryConfigData = new CompressedBlockData();
+
+          entryConfigData.setEnabled(
+              configuration.get(blockEntry.getDisplayName(),
+                                ConfigurationData.BLOCK_COMPRESSION_IS_ENABLED_KEY,
+                                ConfigurationData.BLOCK_COMPRESSION_IS_ENABLED_DEFAULT_VALUE)
+                  .getBoolean());
+
+          entryConfigData.setDecorativeOnly(
+              configuration.get(blockEntry.getDisplayName(),
+                                ConfigurationData.BLOCK_COMPRESSION_DECORATIVE_ONLY_KEY,
+                                ConfigurationData.BLOCK_COMPRESSION_DECORATIVE_ONLY_DEFAULT_VALUE)
+                  .getBoolean());
+
+          entryConfigData.setMaxCompressionLevel(
+              configuration.get(blockEntry.getDisplayName(),
+                                ConfigurationData.BLOCK_COMPRESSION_MAX_COMPRESSION_LEVEL_KEY,
+                                ConfigurationData.BLOCK_COMPRESSION_MAX_COMPRESSION_LEVEL_DEFAULT_VALUE)
+                  .getInt());
+        }
+      }
+
     } catch (Exception exception) {
       LogHelper.error("Unable to read configuration for " + ModInformation.MOD_NAME);
       LogHelper.error(exception);
