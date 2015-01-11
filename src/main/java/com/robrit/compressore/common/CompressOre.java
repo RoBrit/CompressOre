@@ -19,6 +19,7 @@
 
 package com.robrit.compressore.common;
 
+import com.robrit.compressore.common.event.ConfigurationHandler;
 import com.robrit.compressore.common.proxy.IProxy;
 import com.robrit.compressore.common.util.LogHelper;
 import com.robrit.compressore.common.util.ModInformation;
@@ -52,6 +53,9 @@ public class CompressOre {
 
   @Mod.EventHandler
   public static void preInit(FMLPreInitializationEvent event) {
+    ConfigurationHandler.setConfigFile(event.getSuggestedConfigurationFile());
+    ConfigurationHandler.init();
+
     if (ModInformation.DEBUG_MODE) {
       LogHelper.info(String.format("Finished pre-initialisation stage for %s",
                                    ModInformation.MOD_ID));
@@ -60,6 +64,7 @@ public class CompressOre {
 
   @Mod.EventHandler
   public static void init(FMLInitializationEvent event) {
+    ConfigurationHandler.updateConfiguration();
     if (ModInformation.DEBUG_MODE) {
       LogHelper.info(String.format("Finished initialisation stage for %s",
                                    ModInformation.MOD_ID));
