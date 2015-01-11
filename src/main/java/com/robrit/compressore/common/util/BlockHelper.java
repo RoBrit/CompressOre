@@ -4,6 +4,8 @@ import net.minecraft.item.ItemStack;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Set;
 import java.util.TreeMap;
 
 public class BlockHelper {
@@ -14,6 +16,14 @@ public class BlockHelper {
 
   public static TreeMap<String, ArrayList<ItemStack>> getBlockRegistry() {
     return blockRegistry;
+  }
+
+  public static Set<String> getBlockRegistryKeys() {
+    return blockRegistry.keySet();
+  }
+
+  public static Collection<ArrayList<ItemStack>> getBlockRegistryValues() {
+    return blockRegistry.values();
   }
 
   public static ArrayList<ItemStack> getEntriesFromRegistry(final String blockName) {
